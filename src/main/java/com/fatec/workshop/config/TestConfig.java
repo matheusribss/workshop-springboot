@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.fatec.workshop.entities.Category;
 import com.fatec.workshop.entities.Order;
 import com.fatec.workshop.entities.OrderItem;
+import com.fatec.workshop.entities.Payment;
 import com.fatec.workshop.entities.Product;
 import com.fatec.workshop.entities.User;
 import com.fatec.workshop.entities.enums.OrderStatus;
@@ -90,6 +91,10 @@ public class TestConfig implements CommandLineRunner{
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
+		Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"),o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1);
 	}
 	
 	
