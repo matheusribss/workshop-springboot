@@ -6,6 +6,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.workshop.entities.pk.OrderItemPK;
 
 
@@ -16,8 +17,9 @@ public class OrderItem implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	//SEMPRE QUE FAER UM ID COMPOSTO VOCE TEM Q INSTANCIALA
 	@EmbeddedId
-	private OrderItemPK id;
+	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
 	private Double price;
@@ -36,6 +38,7 @@ public class OrderItem implements Serializable {
 		
 	}
 	
+	@JsonIgnore //ESSE GET ESTAVA CHAMANDO O PEDIDO ASSOCIADO AO ITEM DE PEDIDO FAZENDO O LOPPING INFINITO
 	public Order getOrder() {
 		return id.getOrder();
 	}
