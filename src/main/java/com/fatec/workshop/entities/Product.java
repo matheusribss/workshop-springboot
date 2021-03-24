@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 //IMPLEMENTA ASSOCIAÇÃO ENTRE PRODUTO EM CATEGORIA
 @Entity
@@ -30,7 +32,11 @@ public class Product implements Serializable {
 	//ASSOCIAÇÃO COM CATEGORIA
 	//SET REPRESENTA UM CONJUNTO , PRA GARANTIR Q NAO EXISTA UM PRODUTO DA MESMA CATEGORIA
 	//Instanciar com a coleção ja iniciada
-	@Transient
+	
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", 
+	joinColumns = @JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name= "category_id"))
 	private Set <Category> categories = new HashSet<>();
 	
 	public Product() {

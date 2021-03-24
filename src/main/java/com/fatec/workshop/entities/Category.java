@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //IMPLEMENTA ASSOCIAÇÃO ENTRE PRODUTO EM CATEGORIA
 
@@ -26,7 +28,8 @@ public class Category implements Serializable{
 	
 	//SET REPRESENTA UM CONJUNTO , PRA GARANTIR Q NAO EXISTA UM PRODUTO DA MESMA CATEGORIA
 		//Instanciar com a coleção ja iniciada
-	@Transient
+	@JsonIgnore
+	@ManyToMany (mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
 	
