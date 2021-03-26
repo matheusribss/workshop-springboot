@@ -43,9 +43,14 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
+		try {
 		User entity = repository.getOne(id);//MAIS EFICIENTE QUE O FINDBYID
 		updateData(entity, obj);
 		return repository.save(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
