@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fatec.workshop.entities.User;
 import com.fatec.workshop.repositories.UserRepository;
+import com.fatec.workshop.services.exceptions.ResourceNotFoundException;
 
 @Service //REGISTRA COMO COMPONONENTE DO SPRING PARA INJETADO AUTOMATICAMENTE PELO SPRING
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get(); 
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
