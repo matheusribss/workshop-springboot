@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.fatec.workshop.entities.User;
 import com.fatec.workshop.repositories.UserRepository;
+import com.fatec.workshop.services.exceptions.DatabaseException;
 import com.fatec.workshop.services.exceptions.ResourceNotFoundException;
 
 @Service //REGISTRA COMO COMPONONENTE DO SPRING PARA INJETADO AUTOMATICAMENTE PELO SPRING
@@ -30,7 +33,13 @@ public class UserService {
 	}
 	
 	public void delete (Long id) {
+		try {
 		repository.deleteById(id);
+		}catch ( EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		}catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 	
 	public User update(Long id, User obj) {
